@@ -1,0 +1,35 @@
+{% extends 'assessment/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+        {% if friends %}
+        {% for friend in friends %}
+            {% if friend.username %}
+            {% if friend.user_profiles.image %}
+        <img src="{{ friend.user_profiles.image.url }}"  height="30" width="30" alt="image"> 
+			{% else %}
+                no image
+			{% endif %} 
+             {{ friend.username}} <br>
+             <input class="hidden-class" data-ids="{{request.user.id|add:friend.id}}" type="hidden" size="100"> <br>
+             <input id="chat-name-submit" type="button" value="Chat">
+             {% endif %}
+        {% endfor %}
+        {% else %}
+        <p>No friends</p>
+        {% endif %}
+    </div>
+</div>
+<script>
+    var element = document.querySelector(".hidden-class");
+    var ids = element.dataset.ids;
+    document.querySelector('#chat-name-submit').onclick = function(e) {
+        var chatId = ids;
+        window.location.pathname = '/chat/' + chatId + '/';
+    };
+</script>
+
+{% endblock %}

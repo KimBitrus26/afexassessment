@@ -1,0 +1,27 @@
+{% extends 'assessment/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div>
+       {% if friend_requests %}
+       {% for f_request in friend_requests %}
+       {% if f_request.from_user.user_profiles.image %}
+                  <img src="{{ f_request.from_user.user_profiles.image.url }}"  height="30" width="30" alt="image">   
+		{% else %}
+        no image
+	{% endif %}
+          <b>{{ f_request.from_user.username}}</b>  <br>
+    <a href="{% url 'friend-request-accept' f_request.id %}">Accept</a>|<a href="{% url 'friend-request-reject' f_request.id %}">Reject</a>     
+       {% endfor %}
+       {% else %}
+       <p>No friend request </p>
+       {% endif %}
+    </div>
+    <hr>
+    </div>
+</div>
+
+{% endblock %}
